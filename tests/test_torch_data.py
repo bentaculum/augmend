@@ -9,6 +9,7 @@ def test_torch_data():
     x = (y + 50*np.random.normal(0,1,y.shape)).astype(np.float32)
 
     data = TensorDataset(torch.tensor(x),torch.tensor(y))
+    data.dummy_attribute = "foo"
     
     # define augmentation pipeline
     aug = Augmend()
@@ -20,6 +21,8 @@ def test_torch_data():
              Elastic(axis=(0, 1), amount=5, order=0)])
     
     data = aug.torch_wrap(data)
+    assert data.dummy_attribute == "foo"
+   
     return data
 
 

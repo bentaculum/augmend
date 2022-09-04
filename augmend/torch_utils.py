@@ -23,6 +23,12 @@ class _AugDataWrapper(Dataset):
         self._dataset = dataset
         self.aug = aug
 
+    def __getattr__(self, name):
+        try:
+            return super().__getattr__(name)
+        except AttributeError:
+            return getattr(self._dataset, name)
+
     def __len__(self):
         return len(self._dataset)
 
